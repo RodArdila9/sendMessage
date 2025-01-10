@@ -85,8 +85,8 @@
                 let variable = "";
                 conversationList.participants.forEach(participant => {
                     if (participant.purpose === "agent") {
-                        participant.sessions.forEach(sessions => {
-                            variable = sessions.sessionId;
+                        participant.sessions.forEach(session => {
+                            variable = session.sessionId;
                         });
                     }
                 });
