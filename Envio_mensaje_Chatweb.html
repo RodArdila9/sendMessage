@@ -62,7 +62,7 @@
               const opts = { "useNormalizedMessage": false };
 
               // Send message
-              apiInstance.postConversationsMessageCommunicationMessages(conversationId, communicationId, body, opts)
+              conversationsApi.postConversationsMessageCommunicationMessages(conversationId, communicationId, body, opts)
                 .then((data) => {
                   console.log(`postConversationsMessageCommunicationMessages success!`);
                 })
