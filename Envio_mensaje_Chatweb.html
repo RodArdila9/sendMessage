@@ -38,22 +38,10 @@
             console.log('agentNameCache: ' + agentName);
         }
 
-        function searchCommunicationId(conversationList) {
-            let variable = "";
-            conversationList.participants.forEach(participant => {
-                if (participant.purpose === "agent") {
-                    participant.sessions.forEach(sessions => {
-                        variable = sessions.sessionId;
-                    });
-                }
-            });
-            return variable;
-        }
-
         console.log("ID de la interacción: " + conversationCache);
         console.log("Nombre del agente: " + agentNameCache);
 
-        if (conversationCache && agentNameCache) {
+        //if (conversationId && agentName) {
             // Authenticated
             //const payload = JSON.parse(decodeURIComponent(state));
 
@@ -93,12 +81,24 @@
                         });
                 })
 
-        } else {
+            function searchCommunicationId(conversationList) {
+                let variable = "";
+                conversationList.participants.forEach(participant => {
+                    if (participant.purpose === "agent") {
+                        participant.sessions.forEach(sessions => {
+                            variable = sessions.sessionId;
+                        });
+                    }
+                });
+                return variable;
+            }
+
+        /*} else {
             console.error(`Message was not send successfully`);
             console.error(
                 `Missing conversationId and/or communicationId on search parameters -> ${location.search}`
             );
-        }
+        }*/
     </script>
 </body>
 
