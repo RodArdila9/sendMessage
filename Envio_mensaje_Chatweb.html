@@ -76,13 +76,6 @@
             });
         })
 
-    } else if (conversationId && communicationId) {
-      // Authentication
-      api.loginImplicitGrant(
-        "ec97d557-ad0b-42b8-ad97-2f132af6e07b",
-        "https://rodardila9.github.io/sendMessage/Envio_mensaje_Chatweb.html",
-        { state: JSON.stringify({ conversationId, communicationId }) }
-      );
     } else {
       console.error(`Message was not send successfully`);
       console.error(
