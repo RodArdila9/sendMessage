@@ -53,6 +53,7 @@
               console.info(`getConversation success!`);
               // Call the function and get the communicationId
               let communicationId = searchCommunicationId(conversationList);
+              console.log(communicationId);
 
               const body = { "textBody": "¡Hola! , mi nombre es " + agentName + " tu asesor en línea, estaré para ayudarte a resolver tus dudas e inquietudes ¿En qué te puedo servir?" }
               const opts = { "useNormalizedMessage": false };
@@ -70,6 +71,7 @@
             })
             .catch((err) => {
               console.log("There was a failure calling getConversation ");
+              console.log(communicationId);
               console.error(err);
             });
         })
