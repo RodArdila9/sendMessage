@@ -42,56 +42,56 @@
         console.log("Nombre del agente: " + agentNameCache);
 
         //if (conversationId && agentName) {
-            // Authenticated
-            //const payload = JSON.parse(decodeURIComponent(state));
+        // Authenticated
+        //const payload = JSON.parse(decodeURIComponent(state));
 
-            api.loginImplicitGrant(
-                "ec97d557-ad0b-42b8-ad97-2f132af6e07b",
-                "https://rodardila9.github.io/sendMessage/Envio_mensaje_Chatweb.html"
-            )
-                .then(() => {
-                    const conversationsApi = new platformClient.ConversationsApi();
+        api.loginImplicitGrant(
+            "ec97d557-ad0b-42b8-ad97-2f132af6e07b",
+            "https://rodardila9.github.io/sendMessage/Envio_mensaje_Chatweb.html"
+        )
+            .then(() => {
+                const conversationsApi = new platformClient.ConversationsApi();
 
-                    // Get conversation
-                    conversationsApi.getConversation(conversationCache)
-                        .then((conversationList) => {
-                            console.info(`getConversation success!`);
-                            // Call the function and get the communicationId
-                            let communicationId = searchCommunicationId(conversationList);
-                            console.log(communicationId);
+                // Get conversation
+                conversationsApi.getConversation(conversationCache)
+                    .then((conversationList) => {
 
-                            const body = { "textBody": "¡Hola! , mi nombre es " + agentNameCache + " tu asesor en línea, estaré para ayudarte a resolver tus dudas e inquietudes ¿En qué te puedo servir?" }
-                            const opts = { "useNormalizedMessage": false };
+                        function searchCommunicationId(conversationList) {
+                            let variable = "";
+                            conversationList.participants.forEach(participant => {
+                                if (participant.purpose === "agent") {
+                                    participant.sessions.forEach(session => {
+                                        variable = session.sessionId;
+                                    });
+                                }
+                            });
+                            return variable;
+                        }
 
-                            // Send message
-                            conversationsApi.postConversationsMessageCommunicationMessages(conversationCache, communicationId, body, opts)
-                                .then((data) => {
-                                    console.log(`postConversationsMessageCommunicationMessages success!`);
-                                })
-                                .catch((err) => {
-                                    console.log("There was a failure calling postConversationsMessageCommunicationMessages");
-                                    console.error(err);
-                                });
+                        console.info(`getConversation success!`);
+                        // Call the function and get the communicationId
+                        let communicationId = searchCommunicationId(conversationList);
+                        console.log("Communication después del search: " + communicationId);
 
-                        })
-                        .catch((err) => {
-                            console.log("There was a failure calling getConversation ");
-                            console.log(communicationId);
-                            console.error(err);
-                        });
-                })
+                        const body = { "textBody": "¡Hola! , mi nombre es " + agentNameCache + " tu asesor en línea, estaré para ayudarte a resolver tus dudas e inquietudes ¿En qué te puedo servir?" }
+                        const opts = { "useNormalizedMessage": false };
 
-            function searchCommunicationId(conversationList) {
-                let variable = "";
-                conversationList.participants.forEach(participant => {
-                    if (participant.purpose === "agent") {
-                        participant.sessions.forEach(session => {
-                            variable = session.sessionId;
-                        });
-                    }
-                });
-                return variable;
-            }
+                        // Send message
+                        conversationsApi.postConversationsMessageCommunicationMessages(conversationCache, communicationId, body, opts)
+                            .then((data) => {
+                                console.log(`postConversationsMessageCommunicationMessages success!`);
+                            })
+                            .catch((err) => {
+                                console.log("There was a failure calling postConversationsMessageCommunicationMessages");
+                                console.error(err);
+                            });
+
+                    })
+                    .catch((err) => {
+                        console.log("There was a failure calling getConversation ");
+                        console.error(err);
+                    });
+            })
 
         /*} else {
             console.error(`Message was not send successfully`);
