@@ -56,10 +56,10 @@
                 conversationsApi.getAnalyticsConversationDetails(conversationCache)
                     .then((conversationList) => {
 
-                        function searchCommunicationId(conversationList) {
+                        function searchCommunicationId(conversationList, agentNameCache) {
                             let variable = "";
                             conversationList.participants.forEach(participant => {
-                                if (participant.purpose === "agent") {
+                                if (participant.participantName === agentNameCache) {
                                     participant.sessions.forEach(session => {
                                         variable = session.sessionId;
                                     });
@@ -70,7 +70,7 @@
 
                         console.info(`getConversationDetails success!`);
                         // Call the function and get the communicationId
-                        let communicationId = searchCommunicationId(conversationList);
+                        let communicationId = searchCommunicationId(conversationList, agentNameCache);
                         console.log("Communication después del search: " + communicationId);
 
                         const body = { "textBody": "¡Hola!, mi nombre es " + agentNameCache + " tu asesor en línea, estaré para ayudarte a resolver tus dudas e inquietudes ¿En qué te puedo servir?" }
